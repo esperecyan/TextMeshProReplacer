@@ -1,4 +1,4 @@
-﻿
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,12 +20,10 @@ namespace TextMeshProReplacer
             GameObject[] rootGameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
             for (int i = 0; i < rootGameObjects.Length; i++)
             {
-                GameObject root = rootGameObjects[i];
-                for (int j = 0; j < root.transform.childCount; j++)
+                Text[] texts = rootGameObjects[i].GetComponentsInChildren<Text>(true);
+                for (int j = 0; j < texts.Length; j++)
                 {
-                    Text text = root.transform.GetChild(j).GetComponent<Text>();
-                    if (text)
-                        ReplaceUnityText(text);
+                    ReplaceUnityText(texts[j]);
                 }
             }
                 
