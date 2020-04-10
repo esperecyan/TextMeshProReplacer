@@ -13,6 +13,17 @@ namespace TextMeshProReplacer
 {
     internal class TextReplacer
     {
+        /// <summary>
+        /// VCIで使用される「Assets/Fonts/NotoSansCJK-Bold_SDF.asset」のGUID。
+        /// </summary>
+        /// <remarks>
+        /// フォントに関して | VCI Text (TextMeshPro) | バーチャルキャスト公式Wiki
+        /// https://virtualcast.jp/wiki/doku.php?id=vci:sdk:text:introduction#%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E3%81%AB%E9%96%A2%E3%81%97%E3%81%A6
+        /// </remarks>
+        private static readonly string VCIFontAssetGUID = "9da32abc4280dd3488ba8ae9c73d2fcc";
+
+        private static TMP_FontAsset vciFontAsset;
+
         [MenuItem("Text Mesh Replacer/Replace Current Scene")]
         internal static void ReplaceCurrentScene()
         {
@@ -167,6 +178,11 @@ namespace TextMeshProReplacer
 
         private static TMP_FontAsset GetTMPFont(Font m_font, TMP_FontAsset[] fonts)
         {
+            if (!vciFontAsset)
+                vciFontAsset
+                    = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(AssetDatabase.GUIDToAssetPath(VCIFontAssetGUID));
+            if (vciFontAsset)
+                return vciFontAsset;
 
             for (int i = 0; i < fonts.Length; i++)
             {
